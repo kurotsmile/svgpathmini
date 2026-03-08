@@ -160,14 +160,53 @@ canvas, img.preview, svg {
   main, header { padding: 16px; }
 }</style>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SVGPathMini","description":"Edit SVG path data and preview shape changes live in-browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","url":"https://svgpathmini.web.app"}</script>
+<style id="round2-style">
+body.theme-shell::before, body.theme-shell::after {
+  content:"";
+  position:fixed;
+  z-index:-1;
+  width:320px;
+  height:320px;
+  border-radius:47% 53% 36% 64% / 52% 52% 48% 48%;
+  background:linear-gradient(155deg, #f7971e22, #1f8ef122);
+  filter: blur(1px);
+}
+body.theme-shell::before { top:-90px; right:-90px; }
+body.theme-shell::after { bottom:-110px; left:-110px; }
+.tool-ribbon {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  margin:0 0 12px;
+  border:1px solid color-mix(in srgb, #f7971e 32%, #ffffff);
+  background:linear-gradient(120deg, #f7971e14, #1f8ef110);
+  border-radius:12px;
+  font-weight:700;
+  letter-spacing:.2px;
+}
+.ribbon-ic {
+  width:18px;
+  height:18px;
+  stroke:color-mix(in srgb, #f7971e 65%, #102030);
+  fill:none;
+  stroke-width:1.9;
+}
+header h1 { position: relative; z-index: 1; }
+header .sub { position: relative; z-index: 1; }
+main { position: relative; overflow: visible; }
+button { min-height: 42px; }
+.theme-shell main{display:grid;gap:14px}.theme-shell main>.tool-ribbon{order:-1}
+</style>
 </head>
-<body>
+<body class="theme-shell">
   <div class="container">
     <header>
       <h1>SVG Path Editor Mini</h1>
       <p class="sub">Edit SVG path data and preview shape changes live in-browser.</p>
     </header>
     <main>
+      <div class="tool-ribbon"><svg viewBox="0 0 24 24" class="ribbon-ic"><path d="M3 18c4-12 14-12 18 0"/><circle cx="3" cy="18" r="2"/><circle cx="21" cy="18" r="2"/></svg><span>Vector Curve Playground</span></div>
       <label>SVG Path (d)</label><textarea id="pathData">M 20 90 Q 95 10 170 90 T 320 90</textarea>
     <div class="grid two" style="margin-top:10px"><div><label>Stroke</label><input id="stroke" type="color" value="#0d6efd"></div><div><label>Fill</label><input id="fill" type="color" value="#ffffff"></div></div>
     <div style="margin-top:10px" class="grid two"><button id="upd">Update Preview</button><button id="copy">Copy Path</button></div>
