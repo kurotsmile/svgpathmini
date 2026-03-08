@@ -268,13 +268,101 @@ button { min-height: 42px; }
 }
 .ux-toast.show { opacity: 1; transform: translateY(0); }
 </style>
+<style id="round4-style">
+.template-svgpathmini .template-hero {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  background: linear-gradient(145deg, #ffffff, #f6fbff);
+}
+.template-svgpathmini .hero-main h2 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+.template-svgpathmini .hero-main p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.template-svgpathmini .hero-chips {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+}
+.template-svgpathmini .hero-stat {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: .86rem;
+  font-weight: 700;
+}
+.template-svgpathmini .tool-guide {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  background: linear-gradient(180deg,#fff,#fbfdff);
+}
+.template-svgpathmini .tool-guide h2 {
+  margin: 0 0 10px;
+  font-size: 1.18rem;
+}
+.template-svgpathmini .tool-guide p {
+  margin: 0 0 10px;
+  color: #32475a;
+  line-height: 1.72;
+}
+.template-svgpathmini .tool-guide ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #32475a;
+  line-height: 1.65;
+}
+.template-svgpathmini .faq-panel {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  padding: 14px;
+}
+.template-svgpathmini .faq-panel h2 { margin: 0 0 10px; font-size: 1.1rem; }
+.template-svgpathmini .faq-panel details {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+  background: linear-gradient(180deg,#fff,#fafeff);
+}
+.template-svgpathmini .faq-panel summary { cursor: pointer; font-weight: 700; }
+.template-svgpathmini .faq-panel p { margin: 8px 0 0; color: #3b5166; line-height: 1.65; }
+.template-svgpathmini .template-hero,
+.template-svgpathmini .tool-guide,
+.template-svgpathmini .faq-panel {
+  animation: fadeSlide .42s ease both;
+}
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.template-svgpathmini .template-hero{border-style:dashed}.template-svgpathmini .tool-guide{border-style:dashed}
+@media (max-width: 720px) {
+  .template-svgpathmini .tool-guide,
+  .template-svgpathmini .template-hero { padding: 12px; }
+}
+</style>
+<script id="round4-faq-schema" type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Vector Curve Workshop mainly used for?","acceptedAnswer":{"@type":"Answer","text":"Vector Curve Workshop is focused on svg path editor mini workflows. It helps you complete common tasks directly in the browser with fast actions and export-ready output."}},{"@type":"Question","name":"Is Vector Curve Workshop free and mobile-friendly?","acceptedAnswer":{"@type":"Answer","text":"Yes. The page is responsive and works on modern desktop and mobile browsers. Most features run client-side, so you can test quickly without complex setup."}},{"@type":"Question","name":"How can I get the best result quality?","acceptedAnswer":{"@type":"Answer","text":"Use high quality source data, apply quick presets as a baseline, and validate the output before download. For repetitive tasks, keep a consistent process to maintain stable quality."}},{"@type":"Question","name":"Can I combine this tool with other tools in this collection?","acceptedAnswer":{"@type":"Answer","text":"Yes. The page includes internal links to related tools so you can chain steps, such as generating assets in one tool and refining them in another."}}]}</script>
+<script id="round4-breadcrumb-schema" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://svgpathmini.web.app/"},{"@type":"ListItem","position":2,"name":"SVG Path Editor Mini","item":"https://svgpathmini.web.app/"}]}</script>
 </head>
-<body class="theme-shell">
+<body class="theme-shell template-svgpathmini">
   <div class="container">
     <header>
       <h1>SVG Path Editor Mini</h1>
       <p class="sub">Edit SVG path data and preview shape changes live in-browser.</p>
     </header>
+    <section class="template-hero"><div class="hero-main"><h2>Vector Curve Workshop: SVG Path Editor Mini</h2><p>Edit path commands with instant visual feedback for icon and logo work.</p></div><div class="hero-chips"><div class="hero-stat">Live Preview</div><div class="hero-stat">Copy Path</div><div class="hero-stat">SVG Focused</div></div></section>
     <main>
       <div class="tool-ribbon"><svg viewBox="0 0 24 24" class="ribbon-ic"><path d="M3 18c4-12 14-12 18 0"/><circle cx="3" cy="18" r="2"/><circle cx="21" cy="18" r="2"/></svg><span>Vector Curve Playground</span></div>
       <label>SVG Path (d)</label><textarea id="pathData">M 20 90 Q 95 10 170 90 T 320 90</textarea>
@@ -283,6 +371,8 @@ button { min-height: 42px; }
     <div class="panel" style="margin-top:10px"><svg id="svgPrev" viewBox="0 0 360 180" width="100%" height="180"><path id="p" stroke-width="6"/></svg></div>
     <section class="quick-actions"><h3>Quick SVG Shapes</h3><div class="quick-grid"><button type="button" class="quick-btn" data-action="path_wave">Wave Path</button><button type="button" class="quick-btn" data-action="path_arc">Arc Path</button><button type="button" class="quick-btn" data-action="path_loop">Loop Path</button></div></section>
     <section class="seo-links"><h3>Explore More Free Web Tools</h3><div class="link-grid"><a href="https://palettekit.web.app" target="_blank" rel="noopener">PaletteKit</a><a href="https://csv2json.web.app" target="_blank" rel="noopener">CSV2JSON</a><a href="https://qrquick.web.app" target="_blank" rel="noopener">QRQuick</a><a href="https://timeflip.web.app" target="_blank" rel="noopener">TimeFlip</a><a href="https://whatdevice.web.app" target="_blank" rel="noopener">WhatDevice</a><a href="https://typerush.web.app" target="_blank" rel="noopener">TypeRush</a><a href="https://gridcollage.web.app" target="_blank" rel="noopener">GridCollage</a><a href="https://photoprintfit.web.app" target="_blank" rel="noopener">PhotoPrintFit</a><a href="https://palettefromimg.web.app" target="_blank" rel="noopener">PaletteFromImg</a><a href="https://tonecraft.web.app" target="_blank" rel="noopener">ToneCraft</a><a href="https://autoboostimg.web.app" target="_blank" rel="noopener">AutoBoostIMG</a><a href="https://instafilterlab.web.app" target="_blank" rel="noopener">InstaFilterLab</a></div></section>
+        <section class="tool-guide" aria-label="Vector Curve Workshop guide"><h2>Professional Guide to SVG Path Editor Mini</h2><p>Vector Curve Workshop is designed for creators and teams who need a fast browser-based workflow without installing heavy software. The interface focuses on clarity: input at the top, action controls in the middle, and export-ready output at the bottom. This pattern reduces cognitive load and helps users complete tasks in fewer clicks.</p><p>For better results, start with high-quality input data or images. Then use the quick action presets to get a strong baseline, and fine tune only when needed. This step-by-step flow is intentional for speed and consistency, especially when producing multiple outputs in one session.</p><p>From an SEO and product perspective, this tool is optimized around search intent for practical tasks. Metadata, structured content, and internal links are aligned so search engines can understand page purpose quickly. For users, this means faster access to the exact function they need and smoother discovery of related utilities.</p><ul><li>Use the primary action button first, then apply quick presets for faster iteration.</li><li>Review output quality on desktop and mobile before downloading or publishing.</li><li>Leverage the related tools section to chain tasks in one productivity flow.</li><li>Keep consistent naming for exported assets to simplify project handoff.</li></ul></section>
+    <section class="faq-panel" aria-label="Frequently asked questions"><h2>FAQ</h2><details><summary>What is Vector Curve Workshop mainly used for?</summary><p>Vector Curve Workshop is focused on svg path editor mini workflows. It helps you complete common tasks directly in the browser with fast actions and export-ready output.</p></details><details><summary>Is Vector Curve Workshop free and mobile-friendly?</summary><p>Yes. The page is responsive and works on modern desktop and mobile browsers. Most features run client-side, so you can test quickly without complex setup.</p></details><details><summary>How can I get the best result quality?</summary><p>Use high quality source data, apply quick presets as a baseline, and validate the output before download. For repetitive tasks, keep a consistent process to maintain stable quality.</p></details><details><summary>Can I combine this tool with other tools in this collection?</summary><p>Yes. The page includes internal links to related tools so you can chain steps, such as generating assets in one tool and refining them in another.</p></details></section>
     </main>
     
 <footer class="site-footer">
@@ -421,6 +511,12 @@ document.getElementById('upd').onclick=render; document.getElementById('copy').o
   const items = document.querySelectorAll('.tool-ribbon,.quick-actions,.seo-links');
   const io = new IntersectionObserver((entries)=>entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target);} }), {threshold:0.2});
   items.forEach(el=>io.observe(el));
+})();</script>
+  <script id="round4-ui">(function(){
+  document.querySelectorAll('.faq-panel details').forEach((d)=>d.addEventListener('toggle',()=>{
+    if(!d.open) return;
+    document.querySelectorAll('.faq-panel details').forEach((x)=>{ if(x!==d) x.open=false; });
+  }));
 })();</script>
 </body>
 </html>
