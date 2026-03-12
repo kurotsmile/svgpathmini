@@ -1,69 +1,1029 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SVGPathMini | SVG Path Editor Mini</title><meta name="description" content="Edit SVG path data and preview shape changes live in-browser."><meta name="keywords" content="svg path editor,svg tool,path d editor"><meta name="author" content="Tran Thien Thanh"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="SVGPathMini - SVG Path Editor Mini"><meta property="og:description" content="Edit SVG path data and preview shape changes live in-browser."><meta property="og:url" content="https://svgpathmini.web.app"><meta property="og:image" content="https://svgpathmini.web.app/favicon.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="SVGPathMini - SVG Path Editor Mini"><meta name="twitter:description" content="Edit SVG path data and preview shape changes live in-browser."><link rel="canonical" href="https://svgpathmini.web.app/"><link rel="icon" type="image/svg+xml" href="favicon.svg"><style>:root{--w:1100px;--r:14px;--font:"Gill Sans","Segoe UI",sans-serif;--bg:linear-gradient(180deg,#fffdf4,#f7fbff);--card:#fff;--text:#2f2a1e;--muted:#746a52;--line:#ece1c0;--g1:#f39c12;--g2:#1d8cf8;--shadow:0 12px 28px rgba(80,69,24,.12)}
-*{box-sizing:border-box}
-body{margin:0;color:var(--text);font-family:var(--font);background:var(--bg)}
-.page{max-width:var(--w);margin:0 auto;padding:24px 16px 36px}
-.tool-shell{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
-label{display:block;margin-bottom:6px;font-weight:700}
-input,select,textarea,button{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit}
-textarea{min-height:130px;resize:vertical}
-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;background:linear-gradient(125deg,var(--g1),var(--g2));color:#fff;font-weight:700;cursor:pointer}
-button:hover{filter:brightness(1.05)}
-.btn-ic{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none}
-.grid{display:grid;gap:12px}
-.grid.two{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-.output,.panel{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
-canvas,img.preview,svg{max-width:100%;border-radius:12px;border:1px solid var(--line);background:#fff}
-.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
-.swatch{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer}
-.swatch div{height:68px}
-.swatch code{display:block;text-align:center;padding:8px;background:#fff}
-.note{color:var(--muted)}
-.site-footer{margin-top:20px;background:#10243a;color:#dce8f8;border:1px solid #1e3e61;border-radius:14px;padding:16px;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.site-footer h3{margin:0 0 8px;color:#fff}
-.site-footer p{margin:5px 0;word-break:break-word}
-.site-footer a{color:#92cfff}
-@media (max-width:720px){.page{padding:14px 10px 24px}.tool-shell{padding:14px}}
-.hero,.tip{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px}.tip{margin-bottom:14px}</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SVGPathMini","description":"Edit SVG path data and preview shape changes live in-browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","url":"https://svgpathmini.web.app"}</script></head><body><div class="page"><section class="hero"><h1>SVG Path Editor Mini</h1><p>Edit SVG path data and preview shape changes live in-browser.</p></section><section class="tip"><strong>Quick Tip:</strong> Use high-quality input for best output quality.</section><section class="tool-shell"><label>SVG Path (d)</label><textarea id="pathData">M 20 90 Q 95 10 170 90 T 320 90</textarea><div class="grid two" style="margin-top:10px"><div><label>Stroke</label><input id="stroke" type="color" value="#0d6efd"></div><div><label>Fill</label><input id="fill" type="color" value="#ffffff"></div></div><div style="margin-top:10px" class="grid two"><button id="upd">Update Preview</button><button id="copy">Copy Path</button></div><div class="panel" style="margin-top:10px"><svg id="svgPrev" viewBox="0 0 360 180" width="100%" height="180"><path id="p" stroke-width="6"/></svg></div></section>
-<footer class="site-footer">
-  <div>
-    <h3>Contact</h3>
-    <p>Email: <a href="mailto:tranthienthanh93@gmail.com">tranthienthanh93@gmail.com</a></p>
-    <p>Web: <a href="https://carrotstore.web.app" target="_blank" rel="noopener">carrotstore.web.app</a></p>
-    <p>Phone: <a href="tel:+84978651577">+84978651577</a></p>
-    <p>Tiktok: <a href="https://www.tiktok.com/@kurotsmilethanh" target="_blank" rel="noopener">@kurotsmilethanh</a></p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVGPathMini | SVG Path Editor Mini</title>
+  <meta name="description" content="Edit SVG path data, test viewBox settings, and export the result as SVG in your browser.">
+  <meta name="keywords" content="svg path editor,svg tool,path d editor,viewbox editor">
+  <meta name="author" content="Tran Thien Thanh">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SVGPathMini - SVG Path Editor Mini">
+  <meta property="og:description" content="Edit SVG path data, preview changes instantly, and export clean SVG markup.">
+  <meta property="og:url" content="https://svgpathmini.web.app">
+  <meta property="og:image" content="https://svgpathmini.web.app/favicon.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SVGPathMini - SVG Path Editor Mini">
+  <meta name="twitter:description" content="Edit SVG path data, preview changes instantly, and export clean SVG markup.">
+  <link rel="canonical" href="https://svgpathmini.web.app/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="google-site-verification" content="S5lElnK5_d47gEgdGKgFDGod_PXwIF2QBFV8ySFpOnc" />
+  <script>(function(s){s.dataset.zone='10718166',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+  <script>(function(s){s.dataset.zone='10718167',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+  <style>
+    :root {
+      --bg: #f4efe3;
+      --surface: rgba(255, 251, 243, 0.92);
+      --surface-strong: #fffdf8;
+      --panel: #fff7e7;
+      --text: #1e1b16;
+      --muted: #665f52;
+      --line: rgba(110, 87, 42, 0.18);
+      --line-strong: rgba(110, 87, 42, 0.34);
+      --accent: #c85a1d;
+      --accent-2: #0f766e;
+      --accent-3: #f2b84b;
+      --danger: #b42318;
+      --success: #117a37;
+      --shadow: 0 18px 50px rgba(74, 53, 19, 0.12);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --content: 1280px;
+      --mono: "Cascadia Code", "Consolas", "SFMono-Regular", monospace;
+      --sans: "Segoe UI Variable Text", "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --display: "Bahnschrift", "Segoe UI Variable Display", "Aptos Display", "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at top left, rgba(242, 184, 75, 0.28), transparent 24%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.12), transparent 22%),
+        linear-gradient(180deg, #f7f1e3 0%, #f3ede1 42%, #efe7d7 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 75%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      max-width: var(--content);
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 14px;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(255, 248, 230, 0.94), rgba(255, 253, 248, 0.92)),
+        linear-gradient(120deg, rgba(200, 90, 29, 0.08), rgba(15, 118, 110, 0.06));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -32px;
+      top: -20px;
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(242, 184, 75, 0.34), transparent 70%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 90, 29, 0.22);
+      background: rgba(255, 249, 238, 0.9);
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 12ch;
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 5.8vw, 4.1rem);
+      line-height: 0.94;
+      letter-spacing: -0.035em;
+      font-weight: 700;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.55;
+      font-weight: 450;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, max-content));
+      gap: 10px;
+      align-items: start;
+    }
+
+    .chip {
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.6);
+      font-size: 0.87rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .editor,
+    .viewer {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      padding: 18px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: var(--display);
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field-grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.94rem;
+      letter-spacing: 0.01em;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      width: 100%;
+      font: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 11px 12px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.82);
+      transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: rgba(15, 118, 110, 0.48);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 208px;
+      resize: vertical;
+      font-family: var(--mono);
+      font-size: 0.94rem;
+      line-height: 1.5;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 46px;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 180ms ease, filter 180ms ease, opacity 180ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      color: #fffdf9;
+      background: linear-gradient(135deg, var(--accent), #d6821e);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .btn-ghost {
+      color: var(--accent-2);
+      background: rgba(15, 118, 110, 0.09);
+    }
+
+    .btn-ic {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      fill: none;
+      flex: 0 0 auto;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .inline-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.76);
+    }
+
+    .inline-toggle input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+    }
+
+    .status {
+      min-height: 46px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.74);
+      font-size: 0.93rem;
+      line-height: 1.5;
+    }
+
+    .status.ok {
+      color: var(--success);
+      border-color: rgba(17, 122, 55, 0.24);
+      background: rgba(17, 122, 55, 0.08);
+    }
+
+    .status.error {
+      color: var(--danger);
+      border-color: rgba(180, 35, 24, 0.22);
+      background: rgba(180, 35, 24, 0.08);
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .preset {
+      text-align: left;
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 248, 235, 0.88));
+    }
+
+    .preset strong,
+    .preset span {
+      display: block;
+    }
+
+    .preset span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 500;
+    }
+
+    .viewer-stage {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(180deg, #fffdf9, #fff6e8);
+      min-height: 500px;
+    }
+
+    .viewer-stage.grid-on::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(82, 64, 28, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(82, 64, 28, 0.1) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .viewer-stage.dark {
+      background: linear-gradient(180deg, #1c211f, #101211);
+    }
+
+    .viewer-stage.dark::before {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    }
+
+    .svg-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    #svgPrev {
+      width: min(100%, 760px);
+      height: auto;
+      display: block;
+      border-radius: 18px;
+      background: transparent;
+    }
+
+    .viewer-toolbar,
+    .metrics {
+      display: grid;
+      gap: 10px;
+    }
+
+    .metrics {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .metric {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .metric strong,
+    .metric span {
+      display: block;
+    }
+
+    .metric strong {
+      font-size: 1.15rem;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 5px;
+    }
+
+    .code-box {
+      margin: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fffdf8;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .site-footer {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid rgba(15, 118, 110, 0.2);
+      border-radius: 24px;
+      color: #ebf7f5;
+      background: linear-gradient(135deg, #14342f, #0f5a53);
+      box-shadow: var(--shadow);
+    }
+
+    .site-footer h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .site-footer p {
+      margin: 7px 0;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    @media (max-width: 1080px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        max-width: none;
+      }
+
+      .hero-meta {
+        grid-template-columns: repeat(2, minmax(0, max-content));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 14px 12px 28px;
+      }
+
+      .hero,
+      .editor,
+      .viewer {
+        padding: 16px;
+      }
+
+      .hero {
+        gap: 12px;
+      }
+
+      .field-grid.two,
+      .field-grid.four,
+      .action-grid,
+      .preset-grid,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-meta {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .viewer-stage,
+      .svg-wrap {
+        min-height: 360px;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SVGPathMini",
+      "description": "Edit SVG path data, test viewBox settings, and export the result as SVG in your browser.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "url": "https://svgpathmini.web.app"
+    }
+  </script>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <span class="eyebrow">SVG workshop</span>
+      <h1>Draw faster. Inspect cleaner.</h1>
+      <p>Paste any SVG path, tweak viewBox and styling in place, then export a ready-to-use SVG snippet. The preview updates live and surfaces invalid path data immediately.</p>
+      <div class="hero-meta">
+        <span class="chip">Live preview</span>
+        <span class="chip">ViewBox control</span>
+        <span class="chip">SVG export</span>
+        <span class="chip">Preset paths</span>
+      </div>
+    </section>
+
+    <main class="workspace">
+      <section class="card editor">
+        <div class="section-head">
+          <h2 class="section-title">Editor</h2>
+          <span class="note">One-file client tool</span>
+        </div>
+
+        <div class="field">
+          <label for="pathData">SVG Path (`d`)</label>
+          <textarea id="pathData" spellcheck="false">M 40 140 C 80 20, 180 20, 220 140 S 360 260, 420 140</textarea>
+          <div class="note">Supports any valid SVG path command sequence. Invalid data will be flagged without breaking the editor.</div>
+        </div>
+
+        <div class="action-grid">
+          <button id="copyPath" class="btn-secondary">Copy Path</button>
+          <button id="resetPath" class="btn-secondary">Reset</button>
+          <button id="fitView" class="btn-ghost">Fit to Path</button>
+          <button id="exportSvg" class="btn-primary">Export SVG</button>
+        </div>
+
+        <div class="field-grid two">
+          <div class="field">
+            <label for="stroke">Stroke</label>
+            <input id="stroke" type="color" value="#c85a1d">
+          </div>
+          <div class="field">
+            <label for="fill">Fill</label>
+            <input id="fill" type="color" value="#fff4db">
+          </div>
+          <div class="field">
+            <label for="strokeWidth">Stroke Width</label>
+            <input id="strokeWidth" type="number" min="0" step="0.5" value="6">
+          </div>
+          <div class="field">
+            <label for="linecap">Line Cap</label>
+            <select id="linecap">
+              <option value="round">round</option>
+              <option value="butt">butt</option>
+              <option value="square">square</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-grid four">
+          <div class="field">
+            <label for="vbX">viewBox X</label>
+            <input id="vbX" type="number" step="1" value="0">
+          </div>
+          <div class="field">
+            <label for="vbY">viewBox Y</label>
+            <input id="vbY" type="number" step="1" value="0">
+          </div>
+          <div class="field">
+            <label for="vbW">viewBox W</label>
+            <input id="vbW" type="number" step="1" value="480">
+          </div>
+          <div class="field">
+            <label for="vbH">viewBox H</label>
+            <input id="vbH" type="number" step="1" value="280">
+          </div>
+        </div>
+
+        <div class="stack">
+          <label class="inline-toggle">
+            <input id="livePreview" type="checkbox" checked>
+            <span>Live preview while typing</span>
+          </label>
+          <label class="inline-toggle">
+            <input id="showGrid" type="checkbox" checked>
+            <span>Show preview grid</span>
+          </label>
+          <label class="inline-toggle">
+            <input id="darkStage" type="checkbox">
+            <span>Dark preview stage</span>
+          </label>
+        </div>
+
+        <div class="field">
+          <div class="section-head">
+            <h3 class="section-title">Presets</h3>
+            <span class="note">Quick starting shapes</span>
+          </div>
+          <div class="preset-grid" id="presetGrid"></div>
+        </div>
+
+        <div id="status" class="status">Ready.</div>
+      </section>
+
+      <section class="card viewer">
+        <div class="section-head">
+          <h2 class="section-title">Preview</h2>
+          <span class="note" id="viewBoxLabel">viewBox 0 0 480 280</span>
+        </div>
+
+        <div id="stage" class="viewer-stage grid-on">
+          <div class="svg-wrap">
+            <svg id="svgPrev" viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg" aria-label="SVG path preview">
+              <path id="pathPreview" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <strong id="charCount">0</strong>
+            <span>Characters</span>
+          </div>
+          <div class="metric">
+            <strong id="commandCount">0</strong>
+            <span>Commands</span>
+          </div>
+          <div class="metric">
+            <strong id="pointCount">0</strong>
+            <span>Number values</span>
+          </div>
+          <div class="metric">
+            <strong id="bboxText">-</strong>
+            <span>Path bounds</span>
+          </div>
+        </div>
+
+        <div class="viewer-toolbar">
+          <div class="section-head">
+            <h3 class="section-title">SVG Output</h3>
+            <button id="copySvg" class="btn-secondary" type="button">Copy SVG</button>
+          </div>
+          <pre id="svgMarkup" class="code-box"></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <h3>Contact</h3>
+        <p>Email: <a href="mailto:tranthienthanh93@gmail.com">tranthienthanh93@gmail.com</a></p>
+        <p>Web: <a href="https://carrotstore.web.app" target="_blank" rel="noopener">carrotstore.web.app</a></p>
+        <p>Phone: <a href="tel:+84978651577">+84978651577</a></p>
+        <p>Tiktok: <a href="https://www.tiktok.com/@kurotsmilethanh" target="_blank" rel="noopener">@kurotsmilethanh</a></p>
+      </div>
+      <div>
+        <h3>Donation</h3>
+        <p>PayPal: <a href="https://www.paypal.com/paypalme/kurotsmile" target="_blank" rel="noopener">paypal.me/kurotsmile</a></p>
+        <p>Ko-fi: <a href="https://ko-fi.com/T6T210E258" target="_blank" rel="noopener">ko-fi.com/T6T210E258</a></p>
+      </div>
+    </footer>
   </div>
-  <div>
-    <h3>Donation</h3>
-    <p>PayPal: <a href="https://www.paypal.com/paypalme/kurotsmile" target="_blank" rel="noopener">https://www.paypal.com/paypalme/kurotsmile</a></p>
-    <p>Buy us a Coffee on Ko-fi: <a href="https://ko-fi.com/T6T210E258" target="_blank" rel="noopener">https://ko-fi.com/T6T210E258</a></p>
-  </div>
-</footer></div><script>function render(){ const d=document.getElementById('pathData').value; const p=document.getElementById('p'); p.setAttribute('d',d); p.setAttribute('stroke',document.getElementById('stroke').value); p.setAttribute('fill',document.getElementById('fill').value);} document.getElementById('upd').onclick=render; document.getElementById('copy').onclick=()=>navigator.clipboard.writeText(document.getElementById('pathData').value); render();</script><script>(function(){
-  const icons = {
-    make:'<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
-    download:'<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>',
-    convert:'<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h13"/><path d="M13 3l4 4-4 4"/><path d="M20 17H7"/><path d="M11 13l-4 4 4 4"/></svg>',
-    apply:'<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
-    copy:'<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><rect x="4" y="4" width="11" height="11" rx="2"/></svg>',
-    random:'<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M16 21h5v-5"/><path d="M4 4l7 7"/></svg>',
-    start:'<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
-    scan:'<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3"/><rect x="7" y="7" width="10" height="10" rx="2"/></svg>'
-  };
-  const choose = (txt) => {
-    const t = txt.toLowerCase();
-    if (t.includes('download') || t.includes('save')) return icons.download;
-    if (t.includes('convert')) return icons.convert;
-    if (t.includes('apply') || t.includes('enhance') || t.includes('detect')) return icons.apply;
-    if (t.includes('copy') || t.includes('extract')) return icons.copy;
-    if (t.includes('random')) return icons.random;
-    if (t.includes('start')) return icons.start;
-    if (t.includes('scan')) return icons.scan;
-    if (t.includes('generate') || t.includes('create') || t.includes('build') || t.includes('update')) return icons.make;
-    return icons.make;
-  };
-  document.querySelectorAll('button').forEach((btn) => {
-    const text = btn.textContent.trim();
-    if (!text || btn.dataset.iconized === '1') return;
-    btn.innerHTML = choose(text) + '<span>' + text + '</span>';
-    btn.dataset.iconized = '1';
-  });
-})();</script></body></html>
+
+  <script>
+    (function () {
+      const icons = {
+        copy: '<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><rect x="4" y="4" width="11" height="11" rx="2"></rect></svg>',
+        reset: '<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.708"></path><path d="M3 4v5h5"></path></svg>',
+        fit: '<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5"></path><path d="M21 8V3h-5"></path><path d="M16 21h5v-5"></path><path d="M3 16v5h5"></path></svg>',
+        export: '<svg class="btn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 21h16"></path></svg>'
+      };
+
+      const presets = [
+        {
+          name: "Wave",
+          hint: "Soft hero divider",
+          d: "M 20 150 C 90 40, 200 40, 270 150 S 420 260, 500 150"
+        },
+        {
+          name: "Heart",
+          hint: "Badge or sticker",
+          d: "M 256 448 L 220 416 C 88 292 0 212 0 108 C 0 28 60 -32 140 -32 C 186 -32 230 -10 256 26 C 282 -10 326 -32 372 -32 C 452 -32 512 28 512 108 C 512 212 424 292 292 416 Z"
+        },
+        {
+          name: "Blob",
+          hint: "Organic illustration",
+          d: "M 98 24 C 154 -2, 233 8, 276 50 C 319 92, 327 166, 292 220 C 257 274, 179 308, 112 286 C 45 264 -11 186 2 112 C 15 38 42 50 98 24 Z"
+        },
+        {
+          name: "Arrow",
+          hint: "Flow indicator",
+          d: "M 20 120 H 250 V 50 L 430 160 L 250 270 V 200 H 20 Z"
+        }
+      ];
+
+      const initialState = {
+        d: "M 40 140 C 80 20, 180 20, 220 140 S 360 260, 420 140",
+        stroke: "#c85a1d",
+        fill: "#fff4db",
+        strokeWidth: 6,
+        linecap: "round",
+        viewBox: { x: 0, y: 0, w: 480, h: 280 }
+      };
+
+      const el = {
+        pathData: document.getElementById("pathData"),
+        stroke: document.getElementById("stroke"),
+        fill: document.getElementById("fill"),
+        strokeWidth: document.getElementById("strokeWidth"),
+        linecap: document.getElementById("linecap"),
+        vbX: document.getElementById("vbX"),
+        vbY: document.getElementById("vbY"),
+        vbW: document.getElementById("vbW"),
+        vbH: document.getElementById("vbH"),
+        livePreview: document.getElementById("livePreview"),
+        showGrid: document.getElementById("showGrid"),
+        darkStage: document.getElementById("darkStage"),
+        status: document.getElementById("status"),
+        stage: document.getElementById("stage"),
+        svgPrev: document.getElementById("svgPrev"),
+        pathPreview: document.getElementById("pathPreview"),
+        svgMarkup: document.getElementById("svgMarkup"),
+        viewBoxLabel: document.getElementById("viewBoxLabel"),
+        charCount: document.getElementById("charCount"),
+        commandCount: document.getElementById("commandCount"),
+        pointCount: document.getElementById("pointCount"),
+        bboxText: document.getElementById("bboxText"),
+        presetGrid: document.getElementById("presetGrid"),
+        copyPath: document.getElementById("copyPath"),
+        resetPath: document.getElementById("resetPath"),
+        fitView: document.getElementById("fitView"),
+        exportSvg: document.getElementById("exportSvg"),
+        copySvg: document.getElementById("copySvg")
+      };
+
+      function iconizeButtons() {
+        const map = new Map([
+          [el.copyPath, icons.copy],
+          [el.resetPath, icons.reset],
+          [el.fitView, icons.fit],
+          [el.exportSvg, icons.export],
+          [el.copySvg, icons.copy]
+        ]);
+
+        map.forEach(function (icon, button) {
+          const text = button.textContent.trim();
+          button.innerHTML = icon + "<span>" + text + "</span>";
+        });
+      }
+
+      function escapeXml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function getViewBox() {
+        const x = Number(el.vbX.value) || 0;
+        const y = Number(el.vbY.value) || 0;
+        const w = Math.max(1, Number(el.vbW.value) || 1);
+        const h = Math.max(1, Number(el.vbH.value) || 1);
+        return { x: x, y: y, w: w, h: h };
+      }
+
+      function formatNumber(value) {
+        return Number(value.toFixed(2)).toString();
+      }
+
+      function updateStageToggles() {
+        el.stage.classList.toggle("grid-on", el.showGrid.checked);
+        el.stage.classList.toggle("dark", el.darkStage.checked);
+      }
+
+      function buildSvgMarkup() {
+        const box = getViewBox();
+        const d = el.pathData.value.trim();
+        return [
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + [box.x, box.y, box.w, box.h].join(" ") + '">',
+          '  <path d="' + escapeXml(d) + '" fill="' + el.fill.value + '" stroke="' + el.stroke.value + '" stroke-width="' + el.strokeWidth.value + '" stroke-linecap="' + el.linecap.value + '" stroke-linejoin="round"></path>',
+          "</svg>"
+        ].join("\n");
+      }
+
+      function setStatus(message, type) {
+        el.status.textContent = message;
+        el.status.className = "status" + (type ? " " + type : "");
+      }
+
+      function updateMetrics(d, bbox) {
+        const commands = d.match(/[a-zA-Z]/g) || [];
+        const numbers = d.match(/-?\d*\.?\d+(?:e[-+]?\d+)?/gi) || [];
+        el.charCount.textContent = String(d.length);
+        el.commandCount.textContent = String(commands.length);
+        el.pointCount.textContent = String(numbers.length);
+        el.bboxText.textContent = bbox ? [formatNumber(bbox.x), formatNumber(bbox.y), formatNumber(bbox.width), formatNumber(bbox.height)].join(" / ") : "-";
+      }
+
+      function applyRender() {
+        const d = el.pathData.value.trim();
+        const box = getViewBox();
+        const path = el.pathPreview;
+
+        path.setAttribute("d", d);
+        path.setAttribute("fill", el.fill.value);
+        path.setAttribute("stroke", el.stroke.value);
+        path.setAttribute("stroke-width", Math.max(0, Number(el.strokeWidth.value) || 0));
+        path.setAttribute("stroke-linecap", el.linecap.value);
+        path.setAttribute("stroke-linejoin", "round");
+        el.svgPrev.setAttribute("viewBox", [box.x, box.y, box.w, box.h].join(" "));
+        el.viewBoxLabel.textContent = "viewBox " + [box.x, box.y, box.w, box.h].join(" ");
+        el.svgMarkup.textContent = buildSvgMarkup();
+        updateStageToggles();
+
+        try {
+          const bbox = d ? path.getBBox() : null;
+          if (d && bbox && bbox.width === 0 && bbox.height === 0) {
+            setStatus("Path rendered, but its bounds are currently zero-sized.", "ok");
+          } else if (d) {
+            setStatus("Path valid. Preview updated live.", "ok");
+          } else {
+            setStatus("Path is empty. Paste SVG path data to begin.", "");
+          }
+          updateMetrics(d, bbox);
+        } catch (error) {
+          updateMetrics(d, null);
+          setStatus("Invalid path data. Check command syntax and numeric separators.", "error");
+        }
+      }
+
+      function renderIfNeeded() {
+        if (el.livePreview.checked) {
+          applyRender();
+        }
+      }
+
+      function copyText(value, successMessage) {
+        navigator.clipboard.writeText(value).then(function () {
+          setStatus(successMessage, "ok");
+        }).catch(function () {
+          setStatus("Clipboard access failed in this browser context.", "error");
+        });
+      }
+
+      function fitViewBoxToPath() {
+        const d = el.pathData.value.trim();
+        if (!d) {
+          setStatus("Nothing to fit. Paste path data first.", "error");
+          return;
+        }
+
+        try {
+          el.pathPreview.setAttribute("d", d);
+          const bbox = el.pathPreview.getBBox();
+          if (!isFinite(bbox.x) || !isFinite(bbox.y) || !isFinite(bbox.width) || !isFinite(bbox.height)) {
+            throw new Error("bbox");
+          }
+
+          const padding = Math.max(12, Number(el.strokeWidth.value) * 2 || 12);
+          el.vbX.value = formatNumber(bbox.x - padding);
+          el.vbY.value = formatNumber(bbox.y - padding);
+          el.vbW.value = formatNumber(Math.max(1, bbox.width + padding * 2));
+          el.vbH.value = formatNumber(Math.max(1, bbox.height + padding * 2));
+          applyRender();
+          setStatus("viewBox fitted to path bounds with padding.", "ok");
+        } catch (error) {
+          setStatus("Cannot fit viewBox because the current path is invalid.", "error");
+        }
+      }
+
+      function downloadSvg() {
+        const svg = buildSvgMarkup();
+        const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "svgpathmini-export.svg";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        setStatus("SVG file exported.", "ok");
+      }
+
+      function resetEditor() {
+        el.pathData.value = initialState.d;
+        el.stroke.value = initialState.stroke;
+        el.fill.value = initialState.fill;
+        el.strokeWidth.value = initialState.strokeWidth;
+        el.linecap.value = initialState.linecap;
+        el.vbX.value = initialState.viewBox.x;
+        el.vbY.value = initialState.viewBox.y;
+        el.vbW.value = initialState.viewBox.w;
+        el.vbH.value = initialState.viewBox.h;
+        el.showGrid.checked = true;
+        el.darkStage.checked = false;
+        el.livePreview.checked = true;
+        applyRender();
+        setStatus("Editor reset to default sample.", "ok");
+      }
+
+      function renderPresets() {
+        presets.forEach(function (preset) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "preset";
+          button.innerHTML = "<strong>" + preset.name + "</strong><span>" + preset.hint + "</span>";
+          button.addEventListener("click", function () {
+            el.pathData.value = preset.d;
+            applyRender();
+            fitViewBoxToPath();
+            setStatus("Preset loaded: " + preset.name + ".", "ok");
+          });
+          el.presetGrid.appendChild(button);
+        });
+      }
+
+      [
+        el.pathData,
+        el.stroke,
+        el.fill,
+        el.strokeWidth,
+        el.linecap,
+        el.vbX,
+        el.vbY,
+        el.vbW,
+        el.vbH
+      ].forEach(function (node) {
+        node.addEventListener("input", renderIfNeeded);
+        node.addEventListener("change", applyRender);
+      });
+
+      [el.showGrid, el.darkStage].forEach(function (node) {
+        node.addEventListener("change", applyRender);
+      });
+
+      el.livePreview.addEventListener("change", function () {
+        if (el.livePreview.checked) {
+          applyRender();
+        } else {
+          setStatus("Live preview paused. Adjust values and the preview will update on the next manual action.", "");
+        }
+      });
+
+      el.copyPath.addEventListener("click", function () {
+        copyText(el.pathData.value, "Path data copied.");
+      });
+
+      el.copySvg.addEventListener("click", function () {
+        copyText(buildSvgMarkup(), "SVG markup copied.");
+      });
+
+      el.fitView.addEventListener("click", fitViewBoxToPath);
+      el.exportSvg.addEventListener("click", downloadSvg);
+      el.resetPath.addEventListener("click", resetEditor);
+
+      iconizeButtons();
+      renderPresets();
+      applyRender();
+    })();
+  </script>
+</body>
+</html>

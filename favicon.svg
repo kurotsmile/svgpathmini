@@ -1,1 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d6efd"/><stop offset="1" stop-color="#1ba19b"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><text x="50%" y="56%" text-anchor="middle" font-size="25" font-family="Arial" fill="#fff">SV</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SVGPathMini icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff7e8"/>
+      <stop offset="1" stop-color="#f0dfbb"/>
+    </linearGradient>
+    <linearGradient id="pathStroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c85a1d"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#6b4a1a" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="64" height="64" rx="16" fill="#f5ebd4"/>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#bg)"/>
+  <rect x="11" y="11" width="42" height="42" rx="10" fill="#fffdf8" stroke="#d7c4a0" stroke-width="1.5"/>
+
+  <g opacity="0.55" stroke="#eadcbc" stroke-width="1">
+    <path d="M21 11v42"/>
+    <path d="M32 11v42"/>
+    <path d="M43 11v42"/>
+    <path d="M11 21h42"/>
+    <path d="M11 32h42"/>
+    <path d="M11 43h42"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <path d="M18 40 C 22 24, 31 20, 35 29 S 45 41, 48 24" fill="none" stroke="url(#pathStroke)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18 40 L 22 24 M 35 29 L 48 24" fill="none" stroke="#7c6a49" stroke-width="1.4" stroke-linecap="round" opacity="0.85"/>
+    <circle cx="18" cy="40" r="3.5" fill="#c85a1d"/>
+    <circle cx="35" cy="29" r="3.5" fill="#0f766e"/>
+    <circle cx="48" cy="24" r="3.5" fill="#c85a1d"/>
+    <circle cx="22" cy="24" r="2.2" fill="#fffdf8" stroke="#7c6a49" stroke-width="1.2"/>
+  </g>
+</svg>
